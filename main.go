@@ -1,10 +1,16 @@
 package main
 
 import (
-	"fmt"
-	"hello/greeting"
+	"net/http"
 )
 
 func main() {
-	fmt.Println(greeting.Hello())
+	// обозначаем, что на запрос по пути "/" возвращается строка "Hello World"
+	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		// тело ответа — это массив байт
+		w.Write([]byte("Hello world!"))
+	})
+
+	// запускаем веб-приложение для обработки запросов
+	http.ListenAndServe(":8000", nil)
 }
